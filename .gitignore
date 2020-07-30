@@ -1,0 +1,15 @@
+
+# data
+data/
+
+# environments
+env_nlp/
+
+# notebook checkpoints
+*.ipynb_checkpoints
+
+# ide
+.idea/
+
+# Mac display files
+*.DS_Store
