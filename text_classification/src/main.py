@@ -21,7 +21,7 @@ def word_averaging(wv, words):
             all_words.add(wv.vocab[word].index)
 
         if not mean:
-            logging.warning("cannot copute similarity with no input $s", words)
+            logging.warning("cannot compute similarity with no input %s", words)
             #FIXME: remove these examples in preprocessing
             return np.zeros(wv.vector_size,)
 
