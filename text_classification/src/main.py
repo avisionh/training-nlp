@@ -3,6 +3,8 @@ import logging
 import gensim
 import nltk
 
+from gensim.models.doc2vec import TaggedDocument
+
 def word_averaging(wv, words):
     """ Averages the words being passed in from word2vec, wv, model
 
@@ -52,3 +54,21 @@ def w2v_tokenise_text(text):
                 continue
             tokens.append(word)
     return tokens
+
+
+def label_sentences(corpus, label_type):
+    """ Gensim's implementation requires each document/paragraph to have a label associated to it.
+        Will do via the TaggedDocument method. Format will be TRAIN_i and TEST_i, where i is
+        the dummy index of the text
+
+    :param corpus: The document/paragraph to label
+    :param label_type: The label we are assigning to documents/paragraphs
+    :return: list of documents/paragraphs with labels
+    """
+    labelled = []
+
+    for i, v in enumerate(corpus):
+        label = label_type + '_' + str(i)
+        labelled.append(doc2vec.TaggedDocument(v.split(), [label]))
+
+    return labelled
