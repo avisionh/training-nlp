@@ -10,6 +10,7 @@ def word_averaging(wv, words):
 
     :param wv:
     :param words:
+
     :return:
     """
 
@@ -36,6 +37,7 @@ def word_averaging_list(wv, text_list):
 
     :param wv:
     :param text_list:
+
     :return:
     """
     return np.vstack([word_averaging(wv, post) for post in text_list])
@@ -45,6 +47,7 @@ def w2v_tokenise_text(text):
     """ Tokenise text being passed in using NLTK tokeniser
 
     :param text: Text to tokenise
+
     :return: tokens returned from text
     """
     tokens = []
@@ -63,12 +66,32 @@ def label_sentences(corpus, label_type):
 
     :param corpus: The document/paragraph to label
     :param label_type: The label we are assigning to documents/paragraphs
+
     :return: list of documents/paragraphs with labels
     """
     labelled = []
 
     for i, v in enumerate(corpus):
         label = label_type + '_' + str(i)
-        labelled.append(doc2vec.TaggedDocument(v.split(), [label]))
+        labelled.append(TaggedDocument(v.split(), [label]))
 
     return labelled
+
+
+def get_vectors(model, corpus_size, vector_size, vector_type):
+    """ Get vectors from trained doc2vec model
+
+    :param model: Trained doc2vec model
+    :param corpus_size: Size of data
+    :param vector_size: Size of embedding vectors
+    :param vectors_type: Training or Testing vectors
+
+    :return: List of vectors
+    """
+
+    vectors = np.zeros((corpus_size, vector_size))
+    for i in range(0, corpus_size):
+        prefix = vector_type + '_' + str(i)
+        vectors[i] = model.docvecs[prefix]
+
+    return vectors
